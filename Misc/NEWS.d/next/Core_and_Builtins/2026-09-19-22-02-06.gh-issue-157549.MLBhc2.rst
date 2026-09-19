@@ -1,0 +1,2 @@
+Fix cross-compilation for ``arm64-apple-darwin`` when ``getpagesize()`` is
+unavailable by using ``sysconf(_SC_PAGESIZE)`` as a fallback.

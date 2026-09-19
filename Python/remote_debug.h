@@ -142,7 +142,14 @@ get_page_size(void) {
         GetSystemInfo(&si);
         page_size = si.dwPageSize;
 #else
+#ifdef HAVE_GETPAGESIZE
         page_size = (size_t)getpagesize();
+#elif defined(HAVE_SYSCONF) && defined(_SC_PAGESIZE)
+        long size = sysconf(_SC_PAGESIZE);
+        if (size > 0) {
+            page_size = (size_t)size;
+        }
+#endif
 #endif
     }
     return page_size;
